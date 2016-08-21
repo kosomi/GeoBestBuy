@@ -8,47 +8,57 @@
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
-    <script src="lib/satellizer/satellizer.js"></script>
-    <script src="lib/ngstorage/ngStorage.js"></script>
-    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
-   
-    <script src="js/services/services.js"></script>
-    <script src="js/services/storage-service.js"></script>
-    <script src="js/services/store-service.js"></script>
-    <script src="js/services/bestbuy-service.js"></script>
-      
-    <script src="js/login-controller.js"></script>
-    <script src="js/search/search-controller.js"></script>
-    <script src="js/stores/stores-controller.js"></script>
-    <script src="js/logs/logs-controller.js"></script>
-    
-    
+    <script src="js/controller.js"></script>
+
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+        // npm install bower;
+        // bower install ngCordova -save;
+
   </head>
-  <body ng-app="bestbuyApp">
-    <!--
-      The nav bar that will be updated as we navigate between views.
-    -->
-    <ion-nav-bar class="bar-stable">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
-    </ion-nav-bar>
-    <!--
-      The views will be rendered in the <ion-nav-view> directive below
-      Templates are in the /templates folder (but you could also
-      have templates inline in this html file if you'd like).
-    -->
-    <ion-nav-view>
-        <script id="login.html" type="text/ng-template"></script>  
-    </ion-nav-view>
-    
-      
+  <body ng-app="starter">
+
+    <ion-pane>
+      <ion-header-bar class="bar-stable">
+        <h1 class="title">Ionic Blank Starter</h1>
+      </ion-header-bar>
+      <ion-content>
+        <div ng-controller="ionicController"> 
+          
+        <div>
+            {{lat}},
+            {{long}},
+            Test: {{test}}
+            <br>
+            http://api.bestbuy.com/v1/stores(area(35,-119,5000))?format=json&show=storeId,name,distance&apiKey=5byuvkzrxzdeajsny2tq3bxh   
+        </div>          
+
+        <label class='item'>
+          <button class='button button-block button-positive' ng-click='findNearestStores()'>
+            Firnd BestBuy stores near you
+          </button>
+        </label>  
+
+        <ion-list>
+          <ion-item ng-repeat="result in results | orderBy:'-distance'">
+            <h3>{{result.name}}</h3>
+            <h3>{{result.distance}} miles</h3>
+          </ion-item>
+        </ion-list> 
+
+        </div>
+      </ion-content>
+    </ion-pane>
   </body>
 </html>
